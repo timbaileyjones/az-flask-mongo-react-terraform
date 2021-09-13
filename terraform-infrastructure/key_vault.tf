@@ -35,3 +35,13 @@ resource "azurerm_key_vault_secret" "connect_string" {
   value        = azurerm_cosmosdb_account.db_account.connection_strings[0]
   key_vault_id = azurerm_key_vault.event-keyvault.id
 }
+resource azurerm_key_vault_secret storage_primary_blob_endpoint {
+    name = "storageprimaryblobendpoint"
+    value = azurerm_storage_account.storage_account.primary_blob_endpoint
+    key_vault_id = azurerm_key_vault.event-keyvault.id
+}
+resource azurerm_key_vault_secret storage_primary_blob_host {
+    name = "storageprimaryblobhost"
+    value = azurerm_storage_account.storage_account.primary_blob_host
+    key_vault_id = azurerm_key_vault.event-keyvault.id
+}

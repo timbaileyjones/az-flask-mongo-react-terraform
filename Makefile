@@ -4,6 +4,8 @@
 IMAGE_NAME=tamino-webapp
 VERSION=$(shell cat .version)
 AWS_DEFAULT_REGION=us-east-1
+VERSION=0.1
+RESOURCE_GROUP=timba
 
 default: all
 all: build run
@@ -24,6 +26,21 @@ get_stack_reason:
 		--stack-name $(stack) \
 		--region us-east-1 |\
 		grep Reason
+
+tf-infra:
+	cd ./terraform-infrastructure &&  terraform init
+	cd ./terraform-infrastructure &&  terraform apply \
+		-auto-approve \
+	    -var app-version=${VERSION} \
+		-var app-resource-group=${RESOURCE_GROUP}
+
+tf-app:
+	cd ./terraform-app && terraform init 
+	cd ./terraform-app && terraform apply \
+		-auto-approve \
+	    -var app-version=${VERSION} \
+		-var app-resource-group=${RESOURCE_GROUP}
+
 
 # Deploy stacks in deployment
 deploy:

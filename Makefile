@@ -7,7 +7,7 @@ AWS_DEFAULT_REGION=us-east-1
 VERSION=0.1
 RESOURCE_GROUP=timba
 
-default: all
+default: tf-infra
 all: build run
 
 # Run tests
@@ -33,6 +33,7 @@ tf-infra:
 		-auto-approve \
 	    -var app-version=${VERSION} \
 		-var app-resource-group=${RESOURCE_GROUP}
+	terraform output -json
 
 tf-app:
 	cd ./terraform-app && terraform init 
@@ -40,6 +41,7 @@ tf-app:
 		-auto-approve \
 	    -var app-version=${VERSION} \
 		-var app-resource-group=${RESOURCE_GROUP}
+	terraform output -json
 
 
 # Deploy stacks in deployment

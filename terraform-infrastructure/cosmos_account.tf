@@ -39,3 +39,8 @@ resource azurerm_cosmosdb_account db_account {
     ignore_changes = [capabilities]
   }
 }
+
+output "connectstring" {
+  value = azurerm_cosmosdb_account.db_account.connection_strings[0]
+  sensitive = true
+}
